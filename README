@@ -1,1 +1,84 @@
+# README for Shell Project
 
+## Overview
+
+This project is a custom Unix shell implementation.  
+The goal was to create a functional shell that can parse, execute, and manage processes similar to popular shells like Bash or Csh.  
+The shell supports command parsing using Lex and Yacc (Flex and Bison), process creation and control, I/O redirection, piping, environment variable expansion, tilde expansion, wildcard expansion, line editing, history navigation, and several built-in commands.
+
+---
+
+## Features Implemented
+
+### Part 1: Parsing and Basic Execution
+- [x] Parsing simple commands and arguments
+- [x] File redirection: `>`, `<`, `2>`, `>&`, `>>`, `>>&`
+- [x] Piping: `|`
+- [x] Background execution: `&`
+- [x] isatty() check to suppress prompts when input is not from a terminal
+
+### Part 2: Signal Handling, Builtins, and Subshells
+- [x] Ctrl-C handling: Does not kill the shell itself
+- [x] Zombie elimination using SIGCHLD and `waitpid()`
+- [x] Built-in commands: `cd`, `exit`, `printenv`, `setenv`, `unsetenv`, `source`
+- [x] Quoting support (single and double quotes)
+- [x] Escaping special characters using `\`
+- [x] Subshell execution: `$(...)` command substitution
+
+### Part 3: Expansions, Wildcards, and Line Editing
+- [x] Environment variable expansion: `${VAR}`, `${$}`, `${?}`, `${!}`, `${_}`, `${SHELL}`
+- [x] Tilde expansion: `~`, `~username`
+- [x] Wildcard expansion: `*` and `?` matching filenames (recursive)
+- [x] Line editing: cursor movement, insertion, backspace, delete, home, end
+- [x] Command history navigation with up and down arrows
+
+---
+
+## Features Not Fully Implemented
+- [ ] Extra Credit: `.shellrc` file sourcing on shell startup
+- [ ] Extra Credit: Process substitution `<(...)`
+- [ ] Extra Credit: Path auto-completion on `<TAB>`
+
+---
+
+## How to Build and Run
+
+1. **Clone the repository**  
+   (Already done if you are in the project directory.)
+
+2. **Build the project**  
+   ```
+   make
+   ```
+
+3. **Run the shell**
+   ```
+   ./shell
+   ```
+
+---
+
+- **Testing Note**:  
+  For part3 features (line editing and history), manual testing is required since they are graded manually.
+
+---
+
+Make sure the tag shows your latest commit diff.
+
+---
+
+## Known Issues
+
+- Subshells with nested `$()` may not fully support deeply nested commands.
+- Wildcard matching does not support hidden files (files starting with `.`) unless explicitly handled.
+- Error messages for malformed commands might not be fully consistent with Bash behavior.
+
+---
+
+## Extra Notes
+
+- Memory leaks and file descriptor leaks were carefully avoided and checked.
+- Code is modularized for clarity and easier debugging.
+- All expansions (`${}`, `~`, `*`, `?`) are done before command execution.
+
+---
